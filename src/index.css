@@ -46,6 +46,22 @@ All colors MUST be HSL.
     --campus-shadow: 0 10px 30px -10px hsl(214 88% 27% / 0.2);
     --campus-glow: 0 0 20px hsl(158 64% 52% / 0.3);
 
+    /* Holographic & 3D Effects */
+    --holographic-gradient: linear-gradient(135deg, 
+      hsl(214 88% 27% / 0.1) 0%, 
+      hsl(158 64% 52% / 0.2) 25%, 
+      hsl(280 100% 70% / 0.1) 50%, 
+      hsl(45 100% 60% / 0.15) 75%, 
+      hsl(214 88% 27% / 0.1) 100%);
+    --glass-bg: rgba(255, 255, 255, 0.05);
+    --glass-border: rgba(255, 255, 255, 0.1);
+    --neon-glow: 0 0 20px hsl(var(--campus-secondary) / 0.6), 0 0 40px hsl(var(--campus-secondary) / 0.4), 0 0 60px hsl(var(--campus-secondary) / 0.2);
+    --hologram-shimmer: linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.5) 50%, transparent 70%);
+    
+    /* 3D Transform Variables */
+    --floating-offset: 0px;
+    --rotate-3d: 0deg;
+
     --radius: 0.5rem;
 
     --sidebar-background: 0 0% 98%;
@@ -112,4 +128,150 @@ All colors MUST be HSL.
   body {
     @apply bg-background text-foreground;
   }
+}
+
+/* Unique Holographic & 3D Effects */
+@layer components {
+  .holographic-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(20px);
+    border: 1px solid var(--glass-border);
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .holographic-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: var(--hologram-shimmer);
+    transition: left 0.5s;
+  }
+  
+  .holographic-card:hover::before {
+    left: 100%;
+  }
+  
+  .floating-3d {
+    animation: float 3s ease-in-out infinite;
+    transform-style: preserve-3d;
+  }
+  
+  .neon-glow {
+    box-shadow: var(--neon-glow);
+  }
+  
+  .particle-bg {
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .particle-bg::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    opacity: 0.3;
+    background: 
+      radial-gradient(2px 2px at 20px 30px, hsl(var(--campus-secondary)), transparent),
+      radial-gradient(2px 2px at 40px 70px, hsl(var(--campus-primary)), transparent),
+      radial-gradient(1px 1px at 90px 40px, hsl(var(--accent)), transparent),
+      radial-gradient(1px 1px at 130px 80px, hsl(var(--campus-secondary)), transparent),
+      radial-gradient(2px 2px at 160px 30px, hsl(var(--campus-primary)), transparent);
+    background-size: 200px 100px;
+    animation: particles 20s linear infinite;
+  }
+  
+  .voice-waveform {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    height: 20px;
+  }
+  
+  .voice-bar {
+    width: 3px;
+    background: hsl(var(--campus-secondary));
+    border-radius: 2px;
+    animation: waveform 1.5s ease-in-out infinite;
+  }
+  
+  .voice-bar:nth-child(1) { animation-delay: 0s; height: 4px; }
+  .voice-bar:nth-child(2) { animation-delay: 0.1s; height: 8px; }
+  .voice-bar:nth-child(3) { animation-delay: 0.2s; height: 12px; }
+  .voice-bar:nth-child(4) { animation-delay: 0.3s; height: 16px; }
+  .voice-bar:nth-child(5) { animation-delay: 0.4s; height: 12px; }
+  .voice-bar:nth-child(6) { animation-delay: 0.5s; height: 8px; }
+  .voice-bar:nth-child(7) { animation-delay: 0.6s; height: 4px; }
+  
+  .ar-overlay {
+    position: relative;
+    border: 2px solid transparent;
+    background: linear-gradient(45deg, hsl(var(--campus-primary)), hsl(var(--campus-secondary))) border-box;
+    background-clip: padding-box;
+  }
+  
+  .ar-overlay::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: var(--holographic-gradient);
+    border-radius: inherit;
+    z-index: -1;
+  }
+  
+  .mood-shift-happy {
+    filter: hue-rotate(30deg) saturate(1.2);
+  }
+  
+  .mood-shift-calm {
+    filter: hue-rotate(-30deg) saturate(0.8);
+  }
+  
+  .mood-shift-energetic {
+    filter: hue-rotate(60deg) saturate(1.5) brightness(1.1);
+  }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px) rotateX(0deg); }
+  50% { transform: translateY(-10px) rotateX(5deg); }
+}
+
+@keyframes particles {
+  0% { transform: translate(0px, 0px); }
+  33% { transform: translate(30px, -30px); }
+  66% { transform: translate(-20px, 20px); }
+  100% { transform: translate(0px, 0px); }
+}
+
+@keyframes waveform {
+  0%, 100% { height: 4px; }
+  50% { height: 20px; }
+}
+
+@keyframes holographic-pulse {
+  0%, 100% { 
+    box-shadow: 0 0 20px hsl(var(--campus-secondary) / 0.6),
+                0 0 40px hsl(var(--campus-secondary) / 0.4),
+                0 0 60px hsl(var(--campus-secondary) / 0.2);
+  }
+  50% { 
+    box-shadow: 0 0 30px hsl(var(--campus-primary) / 0.8),
+                0 0 50px hsl(var(--campus-primary) / 0.6),
+                0 0 70px hsl(var(--campus-primary) / 0.4);
+  }
+}
+
+@keyframes shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
 }

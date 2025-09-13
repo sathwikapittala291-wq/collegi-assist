@@ -4,8 +4,9 @@ import { Input } from "@/components/ui/input";
 import { Card } from "@/components/ui/card";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Badge } from "@/components/ui/badge";
-import { Send, Bot, User, Sparkles, Mic, MicOff, Volume2, VolumeX, Zap, MapPin, Wifi, Car, Clock, Users } from "lucide-react";
+import { Send, Bot, User, Sparkles, Mic, MicOff, Volume2, VolumeX, Zap, MapPin, Wifi, Car, Clock, Users, Headphones } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { VoiceWaveform } from "@/components/VoiceWaveform";
 
 interface ChatInterfaceProps {
   selectedCategory: string | null;
@@ -222,56 +223,87 @@ To provide detailed AI-powered responses and real campus data, connect this app 
   return (
     <div className="w-full space-y-4">
       {/* Real-time Campus Status Dashboard */}
-      <Card className="p-4 bg-gradient-to-r from-campus-primary/5 to-campus-secondary/5 border-2 border-campus-primary/10">
+      <Card className="holographic-card p-4 mb-4 neon-glow floating-3d">
         <div className="flex items-center justify-between mb-4">
           <h3 className="font-semibold text-foreground flex items-center gap-2">
             <Zap className="w-4 h-4 text-campus-secondary animate-pulse" />
-            Live Campus Status
+            🔥 Neural Campus Status
           </h3>
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => setShowCampusMap(!showCampusMap)}
-            className="hover:bg-campus-primary/10"
-          >
-            <MapPin className="w-4 h-4 mr-2" />
-            {showCampusMap ? 'Hide Map' : 'Show Map'}
-          </Button>
+          <div className="flex items-center gap-2">
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => setShowCampusMap(!showCampusMap)}
+              className="hover:bg-campus-primary/10 holographic-card border-purple-500/30"
+            >
+              <MapPin className="w-4 h-4 mr-2" />
+              {showCampusMap ? '🔮 Hide Holo-Map' : '🌟 Show Holo-Map'}
+            </Button>
+            {isListening && <VoiceWaveform isActive={true} className="ml-2" />}
+          </div>
         </div>
         
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          <div className="text-center p-3 bg-background/50 rounded-lg border">
+          <div className="text-center p-3 holographic-card floating-3d border border-green-500/30">
             <Users className={`w-6 h-6 mx-auto mb-2 ${getStatusColor(campusStatus.library.status)}`} />
-            <p className="text-sm font-medium">Library</p>
-            <p className="text-xs text-muted-foreground">{campusStatus.library.occupancy}% full</p>
+            <p className="text-sm font-medium">📚 Neural Library</p>
+            <p className="text-xs text-muted-foreground">{campusStatus.library.occupancy}% mind-linked</p>
           </div>
           
-          <div className="text-center p-3 bg-background/50 rounded-lg border">
+          <div className="text-center p-3 holographic-card floating-3d border border-orange-500/30" style={{ animationDelay: '0.1s' }}>
             <Clock className={`w-6 h-6 mx-auto mb-2 ${getStatusColor(campusStatus.cafeteria.status)}`} />
-            <p className="text-sm font-medium">Cafeteria</p>
-            <p className="text-xs text-muted-foreground">{campusStatus.cafeteria.waitTime} min wait</p>
+            <p className="text-sm font-medium">🍽️ Quantum Cafeteria</p>
+            <p className="text-xs text-muted-foreground">{campusStatus.cafeteria.waitTime} min time-warp</p>
           </div>
           
-          <div className="text-center p-3 bg-background/50 rounded-lg border">
+          <div className="text-center p-3 holographic-card floating-3d border border-blue-500/30" style={{ animationDelay: '0.2s' }}>
             <Car className={`w-6 h-6 mx-auto mb-2 ${getStatusColor(campusStatus.parking.status)}`} />
-            <p className="text-sm font-medium">Parking</p>
-            <p className="text-xs text-muted-foreground">{campusStatus.parking.available} spots</p>
+            <p className="text-sm font-medium">🚗 Teleport Parking</p>
+            <p className="text-xs text-muted-foreground">{campusStatus.parking.available} portals</p>
           </div>
           
-          <div className="text-center p-3 bg-background/50 rounded-lg border">
+          <div className="text-center p-3 holographic-card floating-3d border border-purple-500/30" style={{ animationDelay: '0.3s' }}>
             <Wifi className={`w-6 h-6 mx-auto mb-2 ${getStatusColor(campusStatus.wifi.status)}`} />
-            <p className="text-sm font-medium">WiFi</p>
-            <p className="text-xs text-muted-foreground">{campusStatus.wifi.strength}% signal</p>
+            <p className="text-sm font-medium">📶 Hypernet WiFi</p>
+            <p className="text-xs text-muted-foreground">{campusStatus.wifi.strength}% neural-link</p>
           </div>
         </div>
 
         {showCampusMap && (
-          <div className="mt-4 p-4 bg-background/30 rounded-lg border">
-            <div className="aspect-video bg-gradient-to-br from-green-100 to-blue-100 rounded-lg flex items-center justify-center">
-              <div className="text-center">
-                <MapPin className="w-12 h-12 mx-auto mb-2 text-campus-primary" />
-                <p className="text-sm font-medium">Interactive Campus Map</p>
-                <p className="text-xs text-muted-foreground">Connect to Supabase for full map integration</p>
+          <div className="mt-4 p-4 holographic-card border border-purple-500/30">
+            <div className="aspect-video bg-gradient-to-br from-indigo-900/20 to-purple-900/20 rounded-lg flex items-center justify-center relative overflow-hidden">
+              {/* Holographic Grid Background */}
+              <div className="absolute inset-0 opacity-20">
+                <div className="w-full h-full" style={{
+                  backgroundImage: `
+                    linear-gradient(rgba(139, 92, 246, 0.3) 1px, transparent 1px),
+                    linear-gradient(90deg, rgba(139, 92, 246, 0.3) 1px, transparent 1px)
+                  `,
+                  backgroundSize: '20px 20px'
+                }}></div>
+              </div>
+              
+              {/* Floating Map Elements */}
+              <div className="text-center relative z-10">
+                <MapPin className="w-16 h-16 mx-auto mb-4 text-purple-400 floating-3d" />
+                <p className="text-lg font-bold text-purple-300">🔮 Holographic Campus Map</p>
+                <p className="text-sm text-purple-400/80">Connect to Supabase for full AR integration</p>
+              </div>
+              
+              {/* Animated Particles */}
+              <div className="absolute inset-0 pointer-events-none">
+                {[...Array(8)].map((_, i) => (
+                  <div
+                    key={i}
+                    className="absolute w-2 h-2 bg-purple-400 rounded-full animate-ping"
+                    style={{
+                      left: `${20 + (i * 12)}%`,
+                      top: `${30 + (i % 3) * 20}%`,
+                      animationDelay: `${i * 0.3}s`,
+                      animationDuration: '2s'
+                    }}
+                  />
+                ))}
               </div>
             </div>
           </div>
@@ -279,32 +311,45 @@ To provide detailed AI-powered responses and real campus data, connect this app 
       </Card>
 
       {/* Enhanced Chat Interface */}
-      <Card className="w-full h-[600px] flex flex-col shadow-xl border-2 border-campus-primary/10">
+      <Card className="w-full h-[600px] flex flex-col shadow-2xl border-2 border-purple-500/20 holographic-card neon-glow">
         {/* Chat Header with Voice Controls */}
-        <div className="p-4 border-b bg-gradient-to-r from-campus-primary/5 to-campus-secondary/5">
+        <div className="p-4 border-b bg-gradient-to-r from-purple-500/10 via-campus-primary/10 to-pink-500/10">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <div className="w-8 h-8 rounded-full bg-gradient-to-br from-campus-primary to-campus-secondary flex items-center justify-center">
-                <Bot className="w-4 h-4 text-white" />
+              <div className={`w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 ${
+                isListening ? 'bg-gradient-to-br from-red-500 to-pink-500 animate-pulse scale-110' :
+                isSpeaking ? 'bg-gradient-to-br from-green-500 to-emerald-500 animate-pulse scale-110' :
+                'bg-gradient-to-br from-campus-primary to-campus-secondary'
+              }`}>
+                {isListening ? <Headphones className="w-5 h-5 text-white" /> :
+                 isSpeaking ? <Volume2 className="w-5 h-5 text-white" /> :
+                 <Bot className="w-5 h-5 text-white" />}
               </div>
               <div>
-                <h3 className="font-semibold text-foreground">🎤 AI Campus Assistant</h3>
-                <p className="text-xs text-muted-foreground">
-                  {isListening ? '🎙️ Listening...' : isSpeaking ? '🔊 Speaking...' : 'Online • Voice & Text Ready'}
+                <h3 className="font-bold text-lg bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
+                  🤖 Neural Campus Assistant
+                </h3>
+                <p className="text-xs text-muted-foreground flex items-center gap-2">
+                  {isListening ? (
+                    <>
+                      <VoiceWaveform isActive={true} className="mr-2" />
+                      🎙️ Neural-linking...
+                    </>
+                  ) : isSpeaking ? '🔊 Transmitting knowledge...' : '🌟 Quantum-ready • Voice & Text Enhanced'}
                 </p>
               </div>
             </div>
             <div className="flex items-center gap-2">
               {selectedCategory && (
-                <Badge variant="secondary" className="bg-campus-primary/10 text-campus-primary">
-                  {selectedCategory}
+                <Badge variant="secondary" className="bg-gradient-to-r from-purple-500/20 to-pink-500/20 text-purple-600 border border-purple-500/30">
+                  🎯 {selectedCategory}
                 </Badge>
               )}
               <Button
                 variant="outline"
                 size="sm"
                 onClick={isSpeaking ? stopSpeaking : () => {}}
-                className="hover:bg-campus-primary/10"
+                className="hover:bg-purple-500/20 holographic-card border-purple-500/30"
               >
                 {isSpeaking ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4" />}
               </Button>

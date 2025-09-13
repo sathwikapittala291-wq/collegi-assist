@@ -47,6 +47,12 @@ export default {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
+        campus: {
+          primary: "hsl(var(--campus-primary))",
+          "primary-light": "hsl(var(--campus-primary-light))",
+          secondary: "hsl(var(--campus-secondary))",
+          "secondary-light": "hsl(var(--campus-secondary-light))",
+        },
         sidebar: {
           DEFAULT: "hsl(var(--sidebar-background))",
           foreground: "hsl(var(--sidebar-foreground))",
